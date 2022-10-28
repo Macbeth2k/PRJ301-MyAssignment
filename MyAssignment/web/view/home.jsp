@@ -12,6 +12,9 @@
         <title>Home</title>
     </head>
     <body>
+        Staff <br>
+        Lecture <br>
+        Student <br>
         <form action="schedule" method="GET">
             <input type="submit" value="Schedule"> <br>
         </form>
