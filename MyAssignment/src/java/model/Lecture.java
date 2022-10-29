@@ -10,10 +10,10 @@ package model;
  */
 public class Lecture extends Member{
     public Lecture() {
-        super(null, null, null, null);
+        super(null, null, null);
     }
 
     public Lecture(String email, String pass, String username, String avatar) {
-        super(email, pass, username, avatar);
+        super(email, username, avatar);
     }
 }

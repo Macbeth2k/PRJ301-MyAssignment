@@ -68,4 +68,7 @@ public class Group {
         this.students = students;
     }    
     
+    public void addStudent(Student student) {
+        this.students.add(student);
+    }   
 }

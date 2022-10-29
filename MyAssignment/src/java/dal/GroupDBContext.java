@@ -4,72 +4,77 @@
  */
 package dal;
 
+import dao.GroupDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Session;
+import model.Group;
 import model.Student;
 
 /**
  *
  * @author LENOVO
  */
-public class StudentDBContext extends DBContext<Student> {
+public class GroupDBContext extends DBContext<Group> {
 
     @Override
-    public void insert(Student model) {
+    public void insert(Group model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void update(Student model) {
+    public void update(Group model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void delete(Student model) {
+    public void delete(Group model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Student get(Student model) {
+    public Group get(Group model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public ArrayList<Student> list() {
+    public ArrayList<Group> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public Student get(String email) {
+    public ArrayList<Group> get(String email) { //loi
+        ArrayList<Group> groups = new ArrayList<>();
+        GroupDAO gd = new GroupDAO(groups);
         try {
-            String sql = "SELECT [email]\n"
-                    + "      ,[username]\n"
-                    + "      ,[avatar]\n"
-                    + "  FROM [dbo].[Student]\n"
-                    + "  where email = ?";
+            String sql = "SELECT [name]\n"
+                    + "      ,[semester]\n"
+                    + "      ,[scode]\n"
+                    + "      ,[lemail]\n"
+                    + "      ,[semail]\n"
+                    + "  FROM [dbo].[Group]\n"
+                    + "  where semail = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             ResultSet rs = stm.executeQuery();
-            if(rs.next()){
-                Student s = new Student();
-                s.setEmail(email);
-                s.setUsername(rs.getString("username"));
-                s.setAvatar(rs.getString("avatar"));
-                return s;
-            }         
+            while (rs.next()) {
+                Group g = new Group();
+                g.setName(rs.getString("name"));
+                g.setSemester(rs.getString("semester"));
+                g.setScode(rs.getString("scode"));
+                g.setLecture(new LectureDBcontext().get(rs.getString("lemail")));
+                if (gd.isDuplicated(g)) {
+                    
+                } else {
+                    
+                }
+            }
+            return groups;
         } catch (SQLException ex) {
-            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
-    }
-    
-    public ArrayList<Session> getSessions(String email){
-        ArrayList<Session> sessions = new ArrayList<>();
-        
-        return sessions;
+        return groups;
     }
 }

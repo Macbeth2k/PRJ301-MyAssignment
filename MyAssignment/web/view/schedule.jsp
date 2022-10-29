@@ -12,8 +12,10 @@
         <title>Schedule</title>
     </head>
     <body>
-        <<form action="" method="">
-
+        <<form action="schedule" method="POST">
+            <input type="text" name="email" value="">
+            <<!--<input type="date" name="from" value="">
+            <input type="date" name="to" value=""> -->
         </form>
 
         <table border="1">

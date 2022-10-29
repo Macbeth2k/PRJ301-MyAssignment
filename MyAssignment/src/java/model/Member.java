@@ -10,13 +10,11 @@ package model;
  */
 public class Member {
     private String email;
-    private String pass;
     private String username;
     private String avatar;
 
-    public Member(String email, String pass, String username, String avatar) {
+    public Member(String email, String username, String avatar) {
         this.email = email;
-        this.pass = pass;
         this.username = username;
         this.avatar = avatar;
     }
@@ -27,14 +25,6 @@ public class Member {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
     }
 
     public String getUsername() {
