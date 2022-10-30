@@ -13,19 +13,24 @@ import java.util.ArrayList;
 public class Group {
     private String name;
     private String semester;
-    private String scode;
+    private Subject subject;
     private Lecture lecture;
     private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<Session> sessions = new ArrayList<>();
+    private ArrayList<Attendance> attendances = new ArrayList<>();
 
     public Group() {
     }
 
-    public Group(String name, String semester, String scode, Lecture lecture, ArrayList<Student> students) {
+    public Group(String name, String semester, Subject subject, Lecture lecture, 
+            ArrayList<Student> students, ArrayList<Session> sessions, ArrayList<Attendance> attendances) {
         this.name = name;
         this.semester = semester;
-        this.scode = scode;
+        this.subject = subject;
         this.lecture = lecture;
         this.students = students;
+        this.sessions = sessions;
+        this.attendances = attendances;
     }
 
     public String getName() {
@@ -44,12 +49,12 @@ public class Group {
         this.semester = semester;
     }
 
-    public String getScode() {
-        return scode;
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setScode(String scode) {
-        this.scode = scode;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public Lecture getLecture() {
@@ -66,9 +71,27 @@ public class Group {
 
     public void setStudents(ArrayList<Student> students) {
         this.students = students;
-    }    
+    }
+
+    public ArrayList<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(ArrayList<Session> sessions) {
+        this.sessions = sessions;
+    }
+
+    public ArrayList<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(ArrayList<Attendance> attendances) {
+        this.attendances = attendances;
+    }
     
-    public void addStudent(Student student) {
-        this.students.add(student);
-    }   
+    
+
+    
+
+   
 }

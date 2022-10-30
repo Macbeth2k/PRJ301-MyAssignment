@@ -11,15 +11,13 @@ package model;
 public class Account {
     private String email;
     private String pass;
-    private String role;
 
     public Account() {
     }
 
-    public Account(String email, String pass, String role) {
+    public Account(String email, String pass) {
         this.email = email;
         this.pass = pass;
-        this.role = role;
     }
 
     public String getEmail() {
@@ -37,14 +35,5 @@ public class Account {
     public void setPass(String pass) {
         this.pass = pass;
     }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-    
     
 }

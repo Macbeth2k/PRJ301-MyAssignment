@@ -20,26 +20,27 @@ public class GroupDAO {
         this.groups = groups;
     }
 
-    public boolean isDuplicated(Group model) {
-        for (Group g : groups) {
-            return g.getName().equals(model.getName())
-                    && g.getSemester().equals(model.getSemester())
-                    && g.getScode().equals(model.getScode());
-        }
-        return false;
-    }
+//    public boolean isDuplicated(Group model) {
+//        for (Group g : groups) {
+//            return g.getName().equals(model.getName())
+//                    && g.getSemester().equals(model.getSemester())
+//                    && g.getScode().equals(model.getScode());
+//        }
+//        return false;
+//    }
     
     public Group getGroupDup(Student model){
-        
+        return null;
     }
     
-    public int getIdDup(Student model){
-        for (Group g : groups) {
-            if(g.getName().equals(model.getName())
-                    && g.getSemester().equals(model.getSemester())
-                    && g.getScode().equals(model.getScode())){
-                
-            }
-        }
-    }
+//    public int getIdDup(Student model){
+//        for (Group g : groups) {
+//            if(g.getName().equals(model.getName())
+//                    && g.getSemester().equals(model.getSemester())
+//                    && g.getScode().equals(model.getScode())){
+//                
+//            }
+//        }
+//        return 0;
+//    }
 }

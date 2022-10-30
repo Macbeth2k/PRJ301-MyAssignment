@@ -12,17 +12,15 @@
         <title>Home</title>
     </head>
     <body>
-        Staff <br>
-        Lecture <br>
-        Student <br>
         <form action="schedule" method="GET">
-            <input type="submit" value="Schedule"> <br>
+            <input type="submit" value="Student"> <br>
         </form>
         <form action="" method="GET">
-            <input type="submit" value="View Attendance"> <br>
+            <input type="submit" value="Lecture"> <br>
         </form>
         <form action="" method="GET">
-            <input type="submit" value="View Result"> <br>
+            <input type="submit" value="Group"> <br>
         </form>
+            
     </body>
 </html>

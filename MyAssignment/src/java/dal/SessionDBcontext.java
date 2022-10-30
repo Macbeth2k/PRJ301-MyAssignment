@@ -70,7 +70,7 @@ public class SessionDBcontext extends DBContext<Session> {
                 Group g = new Group();
                 g.setName(rs.getString("group"));
                 g.setSemester(rs.getString("semester"));
-                g.setScode(rs.getString("scode"));
+                
                 Lecture l = new Lecture();
                 l.setEmail(rs.getString("lemail"));
                 l.setUsername(rs.getString("lusername"));
@@ -93,11 +93,6 @@ public class SessionDBcontext extends DBContext<Session> {
 
     @Override
     public ArrayList<Session> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Session get(Session model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

@@ -23,7 +23,7 @@ public abstract class DBContext<T> {
         try {
             String user = "sa";
             String pass = "123";
-            String database = "test2";
+            String database = "test4";
             String url = "jdbc:sqlserver://THINKPADE15-DUC\\SQLEXPRESS:1433;databaseName="+database;
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
@@ -34,6 +34,6 @@ public abstract class DBContext<T> {
     public abstract void insert(T model); //INSERT INTO
     public abstract void update(T model); // UPDATE SET
     public abstract void delete(T model); // DELETE FROM 
-    public abstract T get(T model); // SELECT * FROM WHERE id = 
+    public abstract T get(String key); // SELECT * FROM WHERE id = 
     public abstract ArrayList<T> list(); //override SELECT * FROM
 }

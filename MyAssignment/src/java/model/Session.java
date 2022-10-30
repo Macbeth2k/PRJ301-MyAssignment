@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,22 +13,22 @@ import java.util.Date;
  */
 public class Session {
     private int serial;
-    private Group group;
     private TimeSlot timeslot;
     private Room room;
     private Date date;
     private boolean attended;
+    private ArrayList<Attendance> attendances = new ArrayList<>();
 
     public Session() {
     }
 
-    public Session(int serial, Group group, TimeSlot timeslot, Room room, Date date, boolean attended) {
+    public Session(int serial, TimeSlot timeslot, Room room, Date date,
+            boolean attended, ArrayList<Attendance> attendances) {
         this.serial = serial;
-        this.group = group;
         this.timeslot = timeslot;
         this.room = room;
         this.date = date;
-        this.attended = attended;
+        this.attended = attended;      
     }
 
     public int getSerial() {
@@ -36,14 +37,6 @@ public class Session {
 
     public void setSerial(int serial) {
         this.serial = serial;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
     }
 
     public TimeSlot getTimeslot() {
@@ -77,7 +70,13 @@ public class Session {
     public void setAttended(boolean attended) {
         this.attended = attended;
     }
-    
-    
-    
+
+    public ArrayList<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(ArrayList<Attendance> attendances) {
+        this.attendances = attendances;
+    }
+       
 }
