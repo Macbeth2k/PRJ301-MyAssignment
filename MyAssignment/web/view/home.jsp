@@ -4,6 +4,7 @@
     Author     : LENOVO
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,15 +13,59 @@
         <title>Home</title>
     </head>
     <body>
-        <form action="schedule" method="GET">
-            <input type="submit" value="Student"> <br>
-        </form>
-        <form action="" method="GET">
-            <input type="submit" value="Lecture"> <br>
-        </form>
-        <form action="" method="GET">
-            <input type="submit" value="Group"> <br>
-        </form>
+        <h4>Hello ${sessionScope.account.username}</h4>
+        <a href="">Log out</a>
+        
+        <c:if test="${sessionScope.account.role eq 'staff'}">
+            <form action="" method="GET">
+                <input type="submit" value="Student"> 
+            </form>
+            <form action="" method="GET">
+                <input type="submit" value="Lecture"> <br>
+            </form>
             
+            <form action="" method="GET">
+                <input type="submit" value="Group">  
+            </form>
+            <form action="" method="GET">
+                <input type="submit" value="Subject">  
+            </form>
+            <form action="" method="GET">
+                <input type="submit" value="Session"> <br>
+            </form>
+            
+            <form action="" method="GET">
+                <input type="submit" value="TimeSlot">
+            </form>
+            <form action="" method="GET">
+                <input type="submit" value="Room"> <br>
+            </form>
+            
+        </c:if>
+
+        <c:if test="${sessionScope.account.role eq 'student'}">
+            <form action="" method="GET">
+                <input type="submit" value="Schedule"> <br>
+            </form>
+            <form action="" method="GET">
+                <input type="submit" value="Attendance"> <br>
+            </form>
+            <form action="" method="GET">
+                <input type="submit" value="Result"> <br>
+            </form>
+        </c:if>
+        
+        <c:if test="${sessionScope.account.role eq 'lecture'}">
+            <form action="" method="GET">
+                <input type="submit" value="Schedule"> <br>
+            </form>
+            <form action="" method="GET">
+                <input type="submit" value="Take Attendance"> <br>
+            </form>
+            <form action="" method="GET">
+                <input type="submit" value="Take Result"> <br>
+            </form>
+        </c:if>
+
     </body>
 </html>
