@@ -41,8 +41,9 @@ public class GroupDBContext extends DBContext<Group> {
     }
 
     @Override
-    public Group get(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Group get(String email) {
+        return null;
     }
-
+    
+    
 }

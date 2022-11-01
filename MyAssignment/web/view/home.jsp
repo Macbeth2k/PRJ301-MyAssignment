@@ -13,8 +13,14 @@
         <title>Home</title>
     </head>
     <body>
-        <h4>Hello ${sessionScope.account.username}</h4>
-        <a href="">Log out</a>
+        <h4>Hello ${sessionScope.account.role}</h4>
+        <c:if test="${sessionScope.account eq null}">
+            <a href="../login">Log in</a> <br>
+        </c:if>
+        <c:if test="${sessionScope.account ne null}">
+            <a href="../logout">Log out</a> <br>
+        </c:if>
+        
         
         <c:if test="${sessionScope.account.role eq 'staff'}">
             <form action="" method="GET">
@@ -44,7 +50,7 @@
         </c:if>
 
         <c:if test="${sessionScope.account.role eq 'student'}">
-            <form action="" method="GET">
+            <form action="../schedule" method="GET">
                 <input type="submit" value="Schedule"> <br>
             </form>
             <form action="" method="GET">
