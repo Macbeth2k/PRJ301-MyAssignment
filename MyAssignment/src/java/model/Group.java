@@ -16,21 +16,17 @@ public class Group {
     private Subject subject;
     private Lecture lecture;
     private ArrayList<Student> students = new ArrayList<>();
-    private ArrayList<Session> sessions = new ArrayList<>();
-    private ArrayList<Attendance> attendances = new ArrayList<>();
 
     public Group() {
     }
 
     public Group(String name, String semester, Subject subject, Lecture lecture, 
-            ArrayList<Student> students, ArrayList<Session> sessions, ArrayList<Attendance> attendances) {
+            ArrayList<Student> students) {
         this.name = name;
         this.semester = semester;
         this.subject = subject;
         this.lecture = lecture;
         this.students = students;
-        this.sessions = sessions;
-        this.attendances = attendances;
     }
 
     public String getName() {
@@ -72,26 +68,5 @@ public class Group {
     public void setStudents(ArrayList<Student> students) {
         this.students = students;
     }
-
-    public ArrayList<Session> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(ArrayList<Session> sessions) {
-        this.sessions = sessions;
-    }
-
-    public ArrayList<Attendance> getAttendances() {
-        return attendances;
-    }
-
-    public void setAttendances(ArrayList<Attendance> attendances) {
-        this.attendances = attendances;
-    }
-    
-    
-
-    
-
    
 }

@@ -4,126 +4,88 @@
     Author     : LENOVO
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Schedule</title>
-    </head>
-    <body>
-        <form action="schedule" method="POST">
-            Email: <input type="text" name="email" value="">
-            <!--<input type="date" name="from" value="">
-            <input type="date" name="to" value=""> -->
-        </form>
+        <jsp:useBean id="da" class="dao.DateDAO" scope="request"></jsp:useBean>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <title>Schedule</title>
+        </head>
+        <body>
+        <c:if test="${sessionScope.account eq null}">
+            <a href="login">Login </a>
+        </c:if>
 
-        <table border="1">
-            <thead>
-                <tr>
-                    <td colspan="2">
-                        <form action="schedule">
-                            <input type="submit" value="<----">
-                        </form>
-                    </td> 
-                    <td colspan="4"></td>
-                    <td colspan="2">
-                        <form action="schedule">
-                            <input type="submit" value="---->">
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Monday <br> </td>
-                    <td>Tuesday <br> </td>
-                    <td>Wednesday <br> </td>
-                    <td>Thursday <br> </td>
-                    <td>Friday <br> </td>
-                    <td>Saturday <br> </td>
-                    <td>Sunday <br> </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Slot 1</td>
-                    <td>Monday</td>
-                    <td>Tuesday</td>
-                    <td>Wednesday</td>
-                   
-                    <td>Sunday</td>
-                </tr>
-                <tr>
-                    <td>Slot 2</td>
-                    <td>Monday</td>
-                    <td>Tuesday</td>
-                    <td>Wednesday</td>
-                    <td>Thursday</td>
-                    <td>Friday</td>
-                    <td>Saturday</td>
-                    <td>Sunday</td>
-                </tr>
-                <tr>
-                    <td>Slot 3</td>
-                    <td>Monday</td>
-                    <td>Tuesday</td>
-                    <td>Wednesday</td>
-                    <td>Thursday</td>
-                    <td>Friday</td>
-                    <td>Saturday</td>
-                    <td>Sunday</td>
-                </tr>
-                <tr>
-                    <td>Slot 4</td>
-                    <td>Monday</td>
-                    <td>Tuesday</td>
-                    <td>Wednesday</td>
-                    <td>Thursday</td>
-                    <td>Friday</td>
-                    <td>Saturday</td>
-                    <td>Sunday</td>
-                </tr>
-                <tr>
-                    <td>Slot 5</td>
-                    <td>Monday</td>
-                    <td>Tuesday</td>
-                    <td>Wednesday</td>
-                    <td>Thursday</td>
-                    <td>Friday</td>
-                    <td>Saturday</td>
-                    <td>Sunday</td>
-                </tr>
-                <tr>
-                    <td>Slot 6</td>
-                    <td>Monday</td>
-                    <td>Tuesday</td>
-                    <td>Wednesday</td>
-                    <td>Thursday</td>
-                    <td>Friday</td>
-                    <td>Saturday</td>
-                    <td>Sunday</td>
-                </tr>
-                <tr>
-                    <td>Slot 7</td>
-                    <td>Monday</td>
-                    <td>Tuesday</td>
-                    <td>Wednesday</td>
-                    <td>Thursday</td>
-                    <td>Friday</td>
-                    <td>Saturday</td>
-                    <td>Sunday</td>
-                </tr>
-                <tr>
-                    <td>Slot 8</td>
-                    <td>Monday</td>
-                    <td>Tuesday</td>
-                    <td>Wednesday</td>
-                    <td>Thursday</td>
-                    <td>Friday</td>
-                    <td>Saturday</td>
-                    <td>Sunday</td>
-                </tr>
-            </tbody>
-        </table>
+        <c:if test="${sessionScope.account ne null}">
+            <form action="schedule" method="POST">
+                From <input type="date" name="from" value="${requestScope.week.from}"> 
+                To <input type="date" name="to" value="${requestScope.week.to}"> 
+            </form>
+                ${requestScope.times}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td colspan="2">
+                            <form action="schedule" method="POST">
+                                <input type="submit" name="shift" value="last week">
+                                <input type="hidden" name="times" value="${requestScope.times-1}">
+                            </form>
+                        </td> 
+                        <td colspan="4"></td>
+                        <td colspan="2">
+                            <form action="schedule" method="POST">
+                                <input type="submit" name="shift" value="next week">
+                                <input type="hidden" name="times" value="${requestScope.times+1}">
+                            </form>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <c:forEach items="${requestScope.dateformat}" var="d">
+                            <td>${d.day} <br> ${d.date}</td>
+                            </c:forEach>
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <c:forEach items="${requestScope.slots}" var="s">
+                        <tr>
+                            <td>slot ${s.slot} <br> ${s.description}</td>
+                                <c:forEach items="${requestScope.week.dates}" var="d">
+                                    <c:set var="flag" value="false" />  
+                                    <c:forEach items="${requestScope.attendances}" var="a">
+                                        <c:choose>
+                                            <c:when test="${(da.isDateEqual(d,a.session.date) == 0) and (s.slot == a.session.timeslot.slot)}">
+                                                <c:set var="flag" value="true" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                 
+                                            </c:otherwise>
+                                        </c:choose>         
+                                    </c:forEach>
+                                 
+                                <c:if test="${flag eq false}">
+                                    <td></td>
+                                </c:if>  
+                                <c:if test="${flag eq true}">
+                                    <td>lum</td>
+                                    <c:set var="flag" value="false" /> 
+                                </c:if>
+                                  
+
+
+                            </c:forEach>
+
+                        </tr>
+                    </c:forEach>
+                </tbody>
+
+            </table>
+        </c:if>    
+
     </body>
 </html>

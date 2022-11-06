@@ -4,8 +4,10 @@
  */
 package model;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
+
+
+
 
 /**
  *
@@ -13,23 +15,25 @@ import java.util.Date;
  */
 public class Session {
     private int serial;
+    private Subject subject;
     private TimeSlot timeslot;
     private Room room;
     private Date date;
     private boolean attended;
-    private ArrayList<Attendance> attendances = new ArrayList<>();
+//    private ArrayList<Attendance> attendances = new ArrayList<>();
 
     public Session() {
     }
 
-    public Session(int serial, TimeSlot timeslot, Room room, Date date,
-            boolean attended, ArrayList<Attendance> attendances) {
+    public Session(int serial, Subject subject, TimeSlot timeslot, Room room, Date date, boolean attended) {
         this.serial = serial;
+        this.subject = subject;
         this.timeslot = timeslot;
         this.room = room;
         this.date = date;
-        this.attended = attended;      
+        this.attended = attended;
     }
+
 
     public int getSerial() {
         return serial;
@@ -71,12 +75,21 @@ public class Session {
         this.attended = attended;
     }
 
-    public ArrayList<Attendance> getAttendances() {
-        return attendances;
+//    public ArrayList<Attendance> getAttendances() {
+//        return attendances;
+//    }
+//
+//    public void setAttendances(ArrayList<Attendance> attendances) {
+//        this.attendances = attendances;
+//    }
+
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setAttendances(ArrayList<Attendance> attendances) {
-        this.attendances = attendances;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
-       
+    
+    
 }

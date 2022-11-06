@@ -4,6 +4,7 @@
  */
 package model;
 
+
 /**
  *
  * @author LENOVO
@@ -20,6 +21,8 @@ public class Subject {
         this.name = name;
     }
 
+    
+
     public String getScode() {
         return scode;
     }
@@ -35,6 +38,6 @@ public class Subject {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     
 }
