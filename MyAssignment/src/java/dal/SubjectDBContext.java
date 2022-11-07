@@ -50,7 +50,7 @@ public class SubjectDBContext extends DBContext<Subject> {
                 return s;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SubjectDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error at subject database");
         }
         return null;
     }

@@ -68,5 +68,10 @@ public class Group {
     public void setStudents(ArrayList<Student> students) {
         this.students = students;
     }
+
+    @Override
+    public String toString() {
+        return "Group{" + "name=" + name + ", semester=" + semester + ", subject=" + subject + ", lecture=" + lecture + ", students=" + students + '}';
+    }
    
 }

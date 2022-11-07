@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 
 
@@ -20,7 +21,7 @@ public class Session {
     private Room room;
     private Date date;
     private boolean attended;
-//    private ArrayList<Attendance> attendances = new ArrayList<>();
+    private ArrayList<Attendance> attendances = new ArrayList<>();
 
     public Session() {
     }
@@ -75,13 +76,13 @@ public class Session {
         this.attended = attended;
     }
 
-//    public ArrayList<Attendance> getAttendances() {
-//        return attendances;
-//    }
-//
-//    public void setAttendances(ArrayList<Attendance> attendances) {
-//        this.attendances = attendances;
-//    }
+    public ArrayList<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(ArrayList<Attendance> attendances) {
+        this.attendances = attendances;
+    }
 
     public Subject getSubject() {
         return subject;

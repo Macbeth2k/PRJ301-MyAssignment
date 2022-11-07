@@ -10,16 +10,14 @@ package model;
  */
 public class Attendance {
     private Student student;
-    private Session session;
     private boolean present;
     private String description;
 
     public Attendance() {
     }
 
-    public Attendance(Student student, Session session, boolean present, String description) {
+    public Attendance(Student student, boolean present, String description) {
         this.student = student;
-        this.session = session;
         this.present = present;
         this.description = description;
     }
@@ -46,15 +44,6 @@ public class Attendance {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Session getSession() {
-        return session;
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
-    }
-    
+    }  
     
 }

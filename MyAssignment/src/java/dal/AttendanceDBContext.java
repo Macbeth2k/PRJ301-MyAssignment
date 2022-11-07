@@ -47,7 +47,6 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    
     public ArrayList<Attendance> getList(String email) {
         try {
             ArrayList<Attendance> attendances = new ArrayList<>();
@@ -63,20 +62,51 @@ public class AttendanceDBContext extends DBContext<Attendance> {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             ResultSet rs = stm.executeQuery();
-            while (rs.next()) {       
-                StudentDBContext sdb = new StudentDBContext();
-                SessionDBcontext ssdb = new SessionDBcontext();
+            StudentDBContext sdb = new StudentDBContext();
+            SessionDBcontext ssdb = new SessionDBcontext();
+            while (rs.next()) {
                 Attendance a = new Attendance();
                 a.setStudent(sdb.get(email));
-                a.setSession(ssdb.get(rs.getInt("serial"), rs.getString("scode"), rs.getString("gname"), rs.getString("semester")));
                 a.setPresent(rs.getBoolean("present"));
                 a.setDescription(rs.getString("description"));
                 attendances.add(a);
             }
             return attendances;
         } catch (SQLException ex) {
-            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error at attendance database, list by email");
         }
         return null;
+    }
+
+    public ArrayList<Attendance> getList(String gname, String semester, String scode, int serial) {
+        ArrayList<Attendance> attendances = new ArrayList<>();
+        StudentDBContext sdb = new StudentDBContext();
+        try {
+            String sql = "SELECT [serial]\n"
+                    + "      ,[gname]\n"
+                    + "      ,[semester]\n"
+                    + "      ,[scode]\n"
+                    + "      ,[semail]\n"
+                    + "      ,[present]\n"
+                    + "      ,[description]\n"
+                    + "  FROM [dbo].[Attendance]\n"
+                    + "  where serial = ? and gname = ? and semester = ? and scode = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, serial);
+            stm.setString(2, gname);
+            stm.setString(3, semester);
+            stm.setString(4, scode);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {                
+                Attendance a = new Attendance();
+                a.setStudent(sdb.get(rs.getString("semail")));
+                a.setPresent(rs.getBoolean("present"));
+                a.setDescription(rs.getString("description"));
+                attendances.add(a);
+            }
+        } catch (SQLException ex) {
+            System.out.println("error at attendance database, list by group");
+        }
+        return attendances;
     }
 }

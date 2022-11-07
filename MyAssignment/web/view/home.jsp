@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="mytag" tagdir="/WEB-INF/tags/" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +14,7 @@
         <title>Home</title>
     </head>
     <body>
-        <h4>Hello ${sessionScope.account.role}</h4>
+        <mytag:welcome name="${sessionScope.account.role}"/>
         <c:if test="${sessionScope.account eq null}">
             <a href="login">Log in</a> <br>
         </c:if>
@@ -54,7 +55,7 @@
                 <input type="submit" value="Schedule"> <br>
             </form>
             <form action="" method="GET">
-                <input type="submit" value="Attendance"> <br>
+                <input type="submit" value="View Attendance"> <br>
             </form>
             <form action="" method="GET">
                 <input type="submit" value="Result"> <br>
@@ -65,7 +66,7 @@
             <form action="schedule" method="GET">
                 <input type="submit" value="Schedule"> <br>
             </form>
-            <form action="" method="GET">
+            <form action="takeatt" method="GET">
                 <input type="submit" value="Take Attendance"> <br>
             </form>
             <form action="" method="GET">

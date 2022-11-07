@@ -53,7 +53,7 @@ public class RoomDBConext extends DBContext<Room> {
                 return r;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(RoomDBConext.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error at room database");
         }
         return null;
         

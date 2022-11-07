@@ -62,7 +62,7 @@ public class AccountDBContext extends DBContext<Account> {
                 return a;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error at account database");
         }
         return null;
     }

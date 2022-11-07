@@ -76,7 +76,7 @@ public class TimeSlotDBContext extends DBContext<TimeSlot> {
                 return t;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TimeSlotDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error at timeslot database");
         }
         return null;
     }

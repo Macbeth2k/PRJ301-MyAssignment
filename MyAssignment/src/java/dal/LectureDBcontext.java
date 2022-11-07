@@ -57,7 +57,7 @@ public class LectureDBcontext extends DBContext<Lecture> {
                 return l;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error at lecture database");
         }
         return null;
     }

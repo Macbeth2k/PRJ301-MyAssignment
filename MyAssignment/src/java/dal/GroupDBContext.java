@@ -44,6 +44,63 @@ public class GroupDBContext extends DBContext<Group> {
     public Group get(String email) {
         return null;
     }
-    
-    
+
+    public ArrayList<Group> list(String email, String semester) {
+        ArrayList<Group> groups = new ArrayList<>();
+        SubjectDBContext sdb = new SubjectDBContext();
+        LectureDBcontext ldb = new LectureDBcontext();
+        try {
+            String sql = "SELECT [name]\n"
+                    + "      ,[semester]\n"
+                    + "      ,[scode]\n"
+                    + "      ,[lemail]\n"
+                    + "  FROM [dbo].[Group]\n"
+                    + "  where lemail = ? and semester = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, email);
+            stm.setString(2, semester);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Group g = new Group();
+                g.setName(rs.getString("name"));
+                g.setSemester(rs.getString("semester"));
+                g.setSubject(sdb.get(rs.getString("scode")));
+                g.setLecture(ldb.get(rs.getString("lemail")));
+                groups.add(g);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error at group database, list");
+        }
+        return groups;
+    }
+
+    public Group get(String name, String semester, String scode) {
+        SubjectDBContext sdb = new SubjectDBContext();
+        LectureDBcontext ldb = new LectureDBcontext();
+        try {
+            String sql = "SELECT [name]\n"
+                    + "      ,[semester]\n"
+                    + "      ,[scode]\n"
+                    + "      ,[lemail]\n"
+                    + "  FROM [dbo].[Group]\n"
+                    + "  where name = ? and semester = ? and scode = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, semester);
+            stm.setString(3, scode);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                Group g = new Group();
+                g.setName(name);
+                g.setSemester(semester);
+                g.setSubject(sdb.get(scode));
+                g.setLecture(ldb.get(rs.getString("lemail")));
+                return g;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error at group database, get");
+        }
+        return null;
+    }
 }

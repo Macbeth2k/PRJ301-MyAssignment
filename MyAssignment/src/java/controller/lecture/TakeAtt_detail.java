@@ -4,9 +4,7 @@
  */
 package controller.lecture;
 
-import dal.GroupDBContext;
-import dal.SessionDBcontext;
-import dao.DateDAO;
+import dal.AttendanceDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,14 +14,28 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.Account;
-import model.Group;
-import model.Session;
+import model.Attendance;
 
 /**
  *
  * @author LENOVO
  */
-public class TakeAtt extends HttpServlet {
+public class TakeAtt_detail extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,16 +46,23 @@ public class TakeAtt extends HttpServlet {
             request.getRequestDispatcher("login").forward(request, response);
         } else {
             if (a.getRole().equals("lecture") || a.getRole().equals("staff")) {
-                DateDAO d = new DateDAO();
-                GroupDBContext gdb = new GroupDBContext();
-                String semester = d.getSemester();
-                ArrayList<Group> groups = gdb.list(a.getEmail(), semester);
-                request.setAttribute("groups", groups);
-                request.getRequestDispatcher("view/lecture/takeatt.jsp").forward(request, response);
+                String name = request.getParameter("gname");
+                String semester = request.getParameter("semester");
+                String scode = request.getParameter("scode");
+                int serial = Integer.parseInt(request.getParameter("serial"));
+
+                AttendanceDBContext adb = new AttendanceDBContext();
+                ArrayList<Attendance> attendances = adb.getList(name, semester, scode, serial);
+
+                request.setAttribute("name", name);
+                request.setAttribute("attendances", attendances);
+                request.getRequestDispatcher("view/lecture/takeatt_detail.jsp").forward(request, response);
             }else{
                 response.sendRedirect("home");
             }
+
         }
+
     }
 
     @Override
@@ -54,27 +73,7 @@ public class TakeAtt extends HttpServlet {
         if (a == null) {
             request.getRequestDispatcher("login").forward(request, response);
         } else {
-            if (a.getRole().equals("lecture") || a.getRole().equals("staff")) {
-
-                SessionDBcontext sdb = new SessionDBcontext();
-                GroupDBContext gdb = new GroupDBContext();
-                
-                String name = request.getParameter("name");
-                String semester = request.getParameter("semester");
-                String scode = request.getParameter("scode");
-          
-                Group g = gdb.get(name, semester, scode);
-                ArrayList<Session> sessions = sdb.list(name,semester,scode);
-                ArrayList<Group> groups = gdb.list(a.getEmail(), semester);
-                
-                request.setAttribute("gr", g);
-                request.setAttribute("sessions", sessions);
-                request.setAttribute("groups", groups);
             
-                request.getRequestDispatcher("view/lecture/takeatt.jsp").forward(request, response);
-            }else{
-                response.sendRedirect("home");
-            }
         }
     }
 

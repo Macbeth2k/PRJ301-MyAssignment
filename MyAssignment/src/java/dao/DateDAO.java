@@ -17,71 +17,64 @@ import model.DateFormat;
  */
 public class DateDAO {
 
-    public ArrayList<Date> getDateOfCurrentWeek() {
-        ArrayList<Date> dates = new ArrayList<>();
+    //Calendar now
+    public Calendar cal(){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
+        return cal;
+    }
+    
+    //get date 3 ---------------------------------------------------------------------------------------------------------
+    public ArrayList<java.sql.Date> getDateOfCurrentWeek() {
+        ArrayList<Date> dates = new ArrayList<>();
         for (int i = Calendar.MONDAY; i <= Calendar.SATURDAY; i++) {
-            cal.set(Calendar.DAY_OF_WEEK, i);
-            dates.add(convertJavaDateToSqlDate(cal.getTime()));
+            cal().set(Calendar.DAY_OF_WEEK, i);
+            dates.add(convertJavaDateToSqlDate(cal().getTime()));
         }
-        cal.add(Calendar.DATE, 1);
-        dates.add(convertJavaDateToSqlDate(cal.getTime()));
+        cal().add(Calendar.DATE, 1);
+        dates.add(convertJavaDateToSqlDate(cal().getTime()));
         return dates;
     }
 
-    public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
-        return new java.sql.Date(date.getTime());
-    }
-
-    public ArrayList<Date> getDateOfNextWeek(int times) {
+    public ArrayList<java.sql.Date> getDateOfNextWeek(int times) {
         ArrayList<Date> dates = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        if(times < 0){
+        if (times < 0) {
             return getDatesOfLastWeek(times);
         }
         for (int i = 0; i < times; i++) {
-            cal.add(Calendar.DATE, 7);
+            cal().add(Calendar.DATE, 7);
         }
         for (int i = Calendar.MONDAY; i <= Calendar.SATURDAY; i++) {
-            cal.set(Calendar.DAY_OF_WEEK, i);
-            dates.add(convertJavaDateToSqlDate(cal.getTime()));
+            cal().set(Calendar.DAY_OF_WEEK, i);
+            dates.add(convertJavaDateToSqlDate(cal().getTime()));
         }
-        cal.add(Calendar.DATE, 1);
-        dates.add(convertJavaDateToSqlDate(cal.getTime()));
+        cal().add(Calendar.DATE, 1);
+        dates.add(convertJavaDateToSqlDate(cal().getTime()));
         return dates;
     }
 
-    public ArrayList<Date> getDatesOfLastWeek(int times) {
+    public ArrayList<java.sql.Date> getDatesOfLastWeek(int times) {
         ArrayList<Date> dates = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        if(times > 0){
+        if (times > 0) {
             return getDateOfNextWeek(times);
         }
         for (int i = 0; i < (-times); i++) {
-            cal.add(Calendar.DATE, -7);
+            cal().add(Calendar.DATE, -7);
         }
         for (int i = Calendar.MONDAY; i <= Calendar.SATURDAY; i++) {
-            cal.set(Calendar.DAY_OF_WEEK, i);
-            dates.add(convertJavaDateToSqlDate(cal.getTime()));
+            cal().set(Calendar.DAY_OF_WEEK, i);
+            dates.add(convertJavaDateToSqlDate(cal().getTime()));
         }
-        cal.add(Calendar.DATE, 1);
-        dates.add(convertJavaDateToSqlDate(cal.getTime()));
+        cal().add(Calendar.DATE, 1);
+        dates.add(convertJavaDateToSqlDate(cal().getTime()));
         return dates;
     }
 
-    public String getDayFromDate(Date date) {
+    //get day ---------------------------------------------------------------------------------------------------------
+    public String getDayFromDate(java.sql.Date date) {
         String[] days = new String[getDayOfWeekFormat().size()];
         days = getDayOfWeekFormat().toArray(days);
         String[] input = date.toString().split("-");
@@ -98,30 +91,23 @@ public class DateDAO {
         return days[day];
     }
 
-    public String getDateFormat(Date date) {
+    //format date 7 ---------------------------------------------------------------------------------------------------------
+    public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
+        return new java.sql.Date(date.getTime());
+    }
+
+    public String getDateFormat(java.sql.Date date) {
         String[] input = date.toString().split("-");
         String d = input[2];
         String m = input[1];
         return d + "-" + m;
     }
 
-    public ArrayList<String> getDateFormat(ArrayList<Date> dates) {
+    public ArrayList<String> getDateFormat(ArrayList<java.sql.Date> dates) {
         ArrayList<String> output = new ArrayList<>();
-        for (Date d : dates) {
+        for (java.sql.Date d : dates) {
             output.add(getDateFormat(d));
         }
-        return output;
-    }
-
-    public ArrayList<String> getDayOfWeekFormat() {
-        ArrayList<String> output = new ArrayList<>();
-        output.add("Monday");
-        output.add("Tuesday");
-        output.add("Wednesday");
-        output.add("Thursday");
-        output.add("Friday");
-        output.add("Saturday");
-        output.add("Sunday");
         return output;
     }
 
@@ -155,22 +141,55 @@ public class DateDAO {
         return output;
     }
 
+    public java.sql.Date getDateWithoutTimeUsingFormat(java.sql.Date date) {
+        return java.sql.Date.valueOf(date.toLocalDate());
+    }
+
+    //day format ---------------------------------------------------------------------------------------------------------
+    public ArrayList<String> getDayOfWeekFormat() {
+        ArrayList<String> output = new ArrayList<>();
+        output.add("Monday");
+        output.add("Tuesday");
+        output.add("Wednesday");
+        output.add("Thursday");
+        output.add("Friday");
+        output.add("Saturday");
+        output.add("Sunday");
+        return output;
+    }
+
+    //date method ---------------------------------------------------------------------------------------------------------
     public java.sql.Date createDate(String date) throws ParseException {
         SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
         String paramDateAsString = date;
         java.util.Date myDate = textFormat.parse(paramDateAsString);
         return new java.sql.Date(myDate.getTime());
     }
-    
-    public java.sql.Date getDateWithoutTimeUsingFormat(java.sql.Date date) {
-        return java.sql.Date.valueOf(date.toLocalDate());
-    }
-    
-    public int isDateEqual(java.sql.Date date1, java.sql.Date date2){
+
+    public int isDateEqual(java.sql.Date date1, java.sql.Date date2) {
         return date1.compareTo(date2);
     }
-    
+
 //    public boolean isBetween(java.sql.Date date, java.sql.Date from, java.sql.Date to){
 //        
 //    }
+    public String getSemester() {
+        //get time
+        //get month, year
+        //trans to representative semsester
+        java.sql.Date date = convertJavaDateToSqlDate(cal().getTime());
+        String[] input = date.toString().split("-");
+        int m = Integer.parseInt(input[1]);
+        String y = input[0];
+        String semester = "";
+        if (m >= 1 && m <= 4) {
+            semester = "SP";
+        } else if (m >= 5 && m <= 8) {
+            semester = "SU";
+        } else {
+            semester = "FA";
+        }
+        
+        return semester + y.substring(2,4);
+    }
 }

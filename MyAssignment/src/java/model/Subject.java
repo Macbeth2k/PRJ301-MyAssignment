@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 
 /**
  *
@@ -12,6 +14,7 @@ package model;
 public class Subject {
     private String scode;
     private String name;
+    private ArrayList<Session> sessions = new ArrayList<>();
 
     public Subject() {
     }
@@ -20,8 +23,6 @@ public class Subject {
         this.scode = scode;
         this.name = name;
     }
-
-    
 
     public String getScode() {
         return scode;
@@ -37,6 +38,14 @@ public class Subject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ArrayList<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(ArrayList<Session> sessions) {
+        this.sessions = sessions;
     }
 
     
