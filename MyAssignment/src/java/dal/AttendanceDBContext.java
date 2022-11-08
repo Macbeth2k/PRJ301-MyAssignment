@@ -25,7 +25,28 @@ public class AttendanceDBContext extends DBContext<Attendance> {
 
     @Override
     public void update(Attendance model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+    }
+
+    public void update(String gname, String semester, String scode, int serial, String email, boolean present, String description) {
+        try {
+            String sql = "UPDATE [dbo].[Attendance]\n"
+                    + "   SET [present] = ?\n"
+                    + "      ,[description] = ?\n"
+                    + " WHERE serial = ? and gname = ? and semester = ? and scode = ? and semail = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setBoolean(1, present);
+            stm.setString(2, description);
+            stm.setInt(3, serial);
+            stm.setString(4, gname);
+            stm.setString(5, semester);
+            stm.setString(6, scode);
+            stm.setString(7, email);  
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error at attendance database, update");
+        }
+
     }
 
     @Override
@@ -97,7 +118,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
             stm.setString(3, semester);
             stm.setString(4, scode);
             ResultSet rs = stm.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 Attendance a = new Attendance();
                 a.setStudent(sdb.get(rs.getString("semail")));
                 a.setPresent(rs.getBoolean("present"));
@@ -109,4 +130,5 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
         return attendances;
     }
+
 }

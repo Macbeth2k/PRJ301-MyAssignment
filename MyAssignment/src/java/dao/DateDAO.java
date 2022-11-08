@@ -27,7 +27,12 @@ public class DateDAO {
         return cal;
     }
     
-    //get date 3 ---------------------------------------------------------------------------------------------------------
+    //get date 4 ---------------------------------------------------------------------------------------------------------
+    public  java.sql.Date getCurrentDate(){
+        cal().add(Calendar.DATE, 1);
+        return convertJavaDateToSqlDate(cal().getTime());
+    }
+    
     public ArrayList<java.sql.Date> getDateOfCurrentWeek() {
         ArrayList<Date> dates = new ArrayList<>();
         for (int i = Calendar.MONDAY; i <= Calendar.SATURDAY; i++) {
@@ -189,7 +194,8 @@ public class DateDAO {
         } else {
             semester = "FA";
         }
-        
         return semester + y.substring(2,4);
     }
+    
+    
 }

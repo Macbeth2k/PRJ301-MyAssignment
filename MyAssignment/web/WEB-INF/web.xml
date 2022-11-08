@@ -36,6 +36,10 @@
         <servlet-name>TakeAtt_detail</servlet-name>
         <servlet-class>controller.lecture.TakeAtt_detail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TakeAtt_detail_edit</servlet-name>
+        <servlet-class>controller.lecture.TakeAtt_detail_edit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Schedule</servlet-name>
         <url-pattern>/schedule</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>TakeAtt_detail</servlet-name>
         <url-pattern>/takeatt_detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TakeAtt_detail_edit</servlet-name>
+        <url-pattern>/takeatt_detail/edit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -19,7 +19,7 @@ public class Session {
     private Subject subject;
     private TimeSlot timeslot;
     private Room room;
-    private Date date;
+    private java.sql.Date date;
     private boolean attended;
     private ArrayList<Attendance> attendances = new ArrayList<>();
 

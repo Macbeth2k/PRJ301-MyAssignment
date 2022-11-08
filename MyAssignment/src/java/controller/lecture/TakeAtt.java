@@ -8,7 +8,6 @@ import dal.GroupDBContext;
 import dal.SessionDBcontext;
 import dao.DateDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +39,7 @@ public class TakeAtt extends HttpServlet {
                 ArrayList<Group> groups = gdb.list(a.getEmail(), semester);
                 request.setAttribute("groups", groups);
                 request.getRequestDispatcher("view/lecture/takeatt.jsp").forward(request, response);
-            }else{
+            } else {
                 response.sendRedirect("home");
             }
         }
@@ -55,24 +54,30 @@ public class TakeAtt extends HttpServlet {
             request.getRequestDispatcher("login").forward(request, response);
         } else {
             if (a.getRole().equals("lecture") || a.getRole().equals("staff")) {
-
-                SessionDBcontext sdb = new SessionDBcontext();
-                GroupDBContext gdb = new GroupDBContext();
-                
                 String name = request.getParameter("name");
                 String semester = request.getParameter("semester");
                 String scode = request.getParameter("scode");
-          
+                String status = request.getParameter("status");
+
+                SessionDBcontext sdb = new SessionDBcontext();
+                GroupDBContext gdb = new GroupDBContext();
                 Group g = gdb.get(name, semester, scode);
-                ArrayList<Session> sessions = sdb.list(name,semester,scode);
+                ArrayList<Session> sessions = sdb.list(name, semester, scode);
                 ArrayList<Group> groups = gdb.list(a.getEmail(), semester);
-                
-                request.setAttribute("gr", g);
-                request.setAttribute("sessions", sessions);
-                request.setAttribute("groups", groups);
-            
+
+                if (status.equals("show")) {
+                    request.setAttribute("groups", groups);
+                    request.setAttribute("name", name);
+                    request.setAttribute("semester", semester);
+                    request.setAttribute("scode", scode);
+                    request.setAttribute("gr", g);
+                    request.setAttribute("sessions", sessions);
+                } else {
+                    request.setAttribute("groups", groups);
+                }
+
                 request.getRequestDispatcher("view/lecture/takeatt.jsp").forward(request, response);
-            }else{
+            } else {
                 response.sendRedirect("home");
             }
         }

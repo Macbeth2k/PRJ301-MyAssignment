@@ -5,6 +5,7 @@
 package controller.lecture;
 
 import dal.AttendanceDBContext;
+import dal.SessionDBcontext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -53,8 +54,12 @@ public class TakeAtt_detail extends HttpServlet {
 
                 AttendanceDBContext adb = new AttendanceDBContext();
                 ArrayList<Attendance> attendances = adb.getList(name, semester, scode, serial);
+                
 
                 request.setAttribute("name", name);
+                request.setAttribute("semester", semester);
+                request.setAttribute("scode", scode);
+                request.setAttribute("serial", serial);
                 request.setAttribute("attendances", attendances);
                 request.getRequestDispatcher("view/lecture/takeatt_detail.jsp").forward(request, response);
             }else{
@@ -73,7 +78,32 @@ public class TakeAtt_detail extends HttpServlet {
         if (a == null) {
             request.getRequestDispatcher("login").forward(request, response);
         } else {
-            
+            //print table
+             if (a.getRole().equals("lecture") || a.getRole().equals("staff")) {
+                String name = request.getParameter("gname");
+                String semester = request.getParameter("semester");
+                String scode = request.getParameter("scode");
+                int serial = Integer.parseInt(request.getParameter("serial"));
+                String[] emails = request.getParameterValues("email");
+                
+                AttendanceDBContext adb = new AttendanceDBContext();
+                SessionDBcontext sdb = new SessionDBcontext();
+                for(String e : emails){
+                    adb.update(name, semester, scode, serial, e, Boolean.parseBoolean(request.getParameter("present"+e)), request.getParameter("description"+e));
+                }                
+                sdb.update(name, semester, scode, serial, true);
+                
+                response.sendRedirect("takeatt");
+                
+            //print message and update to database
+            //get key
+                
+            //update
+            //message
+                request.getRequestDispatcher("view/lecture/takeatt_detail.jsp").forward(request, response);
+            }else{
+                response.sendRedirect("home");
+            }
         }
     }
 
