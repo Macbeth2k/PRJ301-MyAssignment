@@ -68,7 +68,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public ArrayList<Attendance> getList(String email) {
+    public ArrayList<Attendance> getList(String email) { //schedule
         try {
             ArrayList<Attendance> attendances = new ArrayList<>();
             String sql = "SELECT [serial]\n"
@@ -90,6 +90,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 a.setStudent(sdb.get(email));
                 a.setPresent(rs.getBoolean("present"));
                 a.setDescription(rs.getString("description"));
+                a.setSession(ssdb.get(rs.getString("gname"), rs.getString("semester"), rs.getString("scode"), rs.getInt("serial")));
                 attendances.add(a);
             }
             return attendances;

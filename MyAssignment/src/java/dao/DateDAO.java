@@ -33,48 +33,63 @@ public class DateDAO {
         return convertJavaDateToSqlDate(cal().getTime());
     }
     
-    public ArrayList<java.sql.Date> getDateOfCurrentWeek() {
+    public ArrayList<Date> getDateOfCurrentWeek() {
         ArrayList<Date> dates = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
         for (int i = Calendar.MONDAY; i <= Calendar.SATURDAY; i++) {
-            cal().set(Calendar.DAY_OF_WEEK, i);
-            dates.add(convertJavaDateToSqlDate(cal().getTime()));
+            cal.set(Calendar.DAY_OF_WEEK, i);
+            dates.add(convertJavaDateToSqlDate(cal.getTime()));
         }
-        cal().add(Calendar.DATE, 1);
-        dates.add(convertJavaDateToSqlDate(cal().getTime()));
+        cal.add(Calendar.DATE, 1);
+        dates.add(convertJavaDateToSqlDate(cal.getTime()));
         return dates;
     }
 
-    public ArrayList<java.sql.Date> getDateOfNextWeek(int times) {
+    public ArrayList<Date> getDateOfNextWeek(int times) {
         ArrayList<Date> dates = new ArrayList<>();
-        if (times < 0) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        if(times < 0){
             return getDatesOfLastWeek(times);
         }
         for (int i = 0; i < times; i++) {
-            cal().add(Calendar.DATE, 7);
+            cal.add(Calendar.DATE, 7);
         }
         for (int i = Calendar.MONDAY; i <= Calendar.SATURDAY; i++) {
-            cal().set(Calendar.DAY_OF_WEEK, i);
-            dates.add(convertJavaDateToSqlDate(cal().getTime()));
+            cal.set(Calendar.DAY_OF_WEEK, i);
+            dates.add(convertJavaDateToSqlDate(cal.getTime()));
         }
-        cal().add(Calendar.DATE, 1);
-        dates.add(convertJavaDateToSqlDate(cal().getTime()));
+        cal.add(Calendar.DATE, 1);
+        dates.add(convertJavaDateToSqlDate(cal.getTime()));
         return dates;
     }
 
-    public ArrayList<java.sql.Date> getDatesOfLastWeek(int times) {
+    public ArrayList<Date> getDatesOfLastWeek(int times) {
         ArrayList<Date> dates = new ArrayList<>();
-        if (times > 0) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        if(times > 0){
             return getDateOfNextWeek(times);
         }
         for (int i = 0; i < (-times); i++) {
-            cal().add(Calendar.DATE, -7);
+            cal.add(Calendar.DATE, -7);
         }
         for (int i = Calendar.MONDAY; i <= Calendar.SATURDAY; i++) {
-            cal().set(Calendar.DAY_OF_WEEK, i);
-            dates.add(convertJavaDateToSqlDate(cal().getTime()));
+            cal.set(Calendar.DAY_OF_WEEK, i);
+            dates.add(convertJavaDateToSqlDate(cal.getTime()));
         }
-        cal().add(Calendar.DATE, 1);
-        dates.add(convertJavaDateToSqlDate(cal().getTime()));
+        cal.add(Calendar.DATE, 1);
+        dates.add(convertJavaDateToSqlDate(cal.getTime()));
         return dates;
     }
 

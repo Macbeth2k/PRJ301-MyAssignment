@@ -23,7 +23,7 @@
                 From <input type="date" name="from" value="${requestScope.week.from}"> 
                 To <input type="date" name="to" value="${requestScope.week.to}"> 
             </form>
-                ${requestScope.times}
+            ${requestScope.times}
             <table border="1">
                 <thead>
                     <tr>
@@ -55,27 +55,32 @@
                     <c:forEach items="${requestScope.slots}" var="s">
                         <tr>
                             <td>slot ${s.slot} <br> ${s.description}</td>
-                                <c:forEach items="${requestScope.week.dates}" var="d">
-                                    <c:set var="flag" value="false" />  
-                                    <c:forEach items="${requestScope.attendances}" var="a">
-                                        <c:choose>
-                                            <c:when test="${(da.isDateEqual(d,a.session.date) == 0) and (s.slot == a.session.timeslot.slot)}">
-                                                <c:set var="flag" value="true" />
-                                            </c:when>
-                                            <c:otherwise>
-                                                 
-                                            </c:otherwise>
-                                        </c:choose>         
-                                    </c:forEach>
-                                 
+                                <c:forEach items="${requestScope.week.dates}" var="date">
+
+                                <c:set var="flag" value="false" />  
+                                <c:forEach items="${requestScope.sessions}" var="ss">
+                                    <c:choose>
+                                        <c:when test="${(da.isDateEqual(date,ss.date) == 0) and (s.slot == ss.timeslot.slot)}">
+                                            <c:set var="flag" value="true" />
+                                            <td>
+                                                ${ss.group.name} <br>
+                                                ${ss.subject.scode} <br>
+                                                ${ss.room.room} <br>
+                                            </td>
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>    
+                                </c:forEach>
+
                                 <c:if test="${flag eq false}">
                                     <td></td>
                                 </c:if>  
+
                                 <c:if test="${flag eq true}">
-                                    <td>lum</td>
                                     <c:set var="flag" value="false" /> 
                                 </c:if>
-                                  
+
 
 
                             </c:forEach>

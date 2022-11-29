@@ -22,17 +22,19 @@ public class Session {
     private java.sql.Date date;
     private boolean attended;
     private ArrayList<Attendance> attendances = new ArrayList<>();
+    private Group group;
 
     public Session() {
     }
 
-    public Session(int serial, Subject subject, TimeSlot timeslot, Room room, Date date, boolean attended) {
+    public Session(int serial, Subject subject, TimeSlot timeslot, Room room, Date date, boolean attended, Group group) {
         this.serial = serial;
         this.subject = subject;
         this.timeslot = timeslot;
         this.room = room;
         this.date = date;
         this.attended = attended;
+        this.group = group;
     }
 
 
@@ -83,6 +85,11 @@ public class Session {
     public void setAttendances(ArrayList<Attendance> attendances) {
         this.attendances = attendances;
     }
+    
+    public void setAttendances(Attendance attendances) {
+        this.attendances.add(attendances);
+    }
+
 
     public Subject getSubject() {
         return subject;
@@ -90,6 +97,14 @@ public class Session {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
     
     

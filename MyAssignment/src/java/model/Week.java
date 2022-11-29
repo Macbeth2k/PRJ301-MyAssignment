@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Week {
 
-    private ArrayList<Date> dates;
+    private ArrayList<java.sql.Date> dates;
     private Date from;
     private Date to;
 

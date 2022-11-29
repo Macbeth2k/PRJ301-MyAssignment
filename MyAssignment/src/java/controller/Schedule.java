@@ -5,6 +5,7 @@
 package controller;
 
 import dal.AttendanceDBContext;
+import dal.SessionDBcontext;
 import dal.TimeSlotDBContext;
 import dao.DateDAO;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import model.Account;
 import model.Attendance;
 import model.DateFormat;
+import model.Session;
 import model.TimeSlot;
 import model.Week;
 
@@ -43,9 +45,9 @@ public class Schedule extends HttpServlet {
             request.setAttribute("dateformat", df);
 
             //response.getWriter().println(a.getEmail());
-            AttendanceDBContext adb = new AttendanceDBContext();
-            ArrayList<Attendance> attendances = adb.getList(a.getEmail());
-            request.setAttribute("attendances", attendances);
+            SessionDBcontext sdb = new SessionDBcontext();
+            ArrayList<Session> sessions = sdb.lists(a.getEmail(), w.getFrom(), w.getTo());
+            request.setAttribute("sessions", sessions);
 
             TimeSlotDBContext tdb = new TimeSlotDBContext();
             ArrayList<TimeSlot> slots = tdb.list();
@@ -79,9 +81,9 @@ public class Schedule extends HttpServlet {
             request.setAttribute("times", times);
             request.setAttribute("dateformat", df);
 
-            AttendanceDBContext adb = new AttendanceDBContext();
-            ArrayList<Attendance> attendances = adb.getList(a.getEmail());
-            request.setAttribute("attendances", attendances);
+            SessionDBcontext sdb = new SessionDBcontext();
+            ArrayList<Session> sessions = sdb.lists(a.getEmail(), w.getFrom(), w.getTo());
+            request.setAttribute("sessions", sessions);
 
             TimeSlotDBContext tdb = new TimeSlotDBContext();
             ArrayList<TimeSlot> slots = tdb.list();

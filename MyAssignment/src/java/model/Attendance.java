@@ -12,6 +12,7 @@ public class Attendance {
     private Student student;
     private boolean present;
     private String description;
+    private Session session;
 
     public Attendance() {
     }
@@ -20,6 +21,7 @@ public class Attendance {
         this.student = student;
         this.present = present;
         this.description = description;
+        this.session = new Session();
     }
 
     public Student getStudent() {
@@ -45,5 +47,13 @@ public class Attendance {
     public void setDescription(String description) {
         this.description = description;
     }  
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
     
 }
